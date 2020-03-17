@@ -1,0 +1,20 @@
+---
+- name: Install Ansible
+  hosts: tag_Name_Ansible
+  become: yes
+  tasks:
+    - name: Install git and java
+      yum:
+        name:
+          - git
+          - python
+          - java-1.8.0-openjdk
+    - name: Install pip
+      yum:  
+        name: python-pip
+        state: latest
+    - name: Install ansible
+      pip:
+        name:
+          - ansible
+        state: latest

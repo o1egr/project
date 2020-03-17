@@ -1,0 +1,22 @@
+---
+- name: Install Terraform
+  hosts: tag_Name_Terraform
+  become: yes
+  tasks:
+    - name: Install python and java
+      yum:
+        name:
+          - python
+          - java-1.8.0-openjdk
+    - name: Install git
+      yum:
+        name:
+          - git
+    - name: Download Terraform
+      get_url:
+        url: https://releases.hashicorp.com/terraform/0.12.21/terraform_0.12.21_linux_amd64.zip
+        dest: /home/ec2-user
+
+    - name: Install Terraform
+      unarchive: src=/home/ec2-user/terraform_0.12.21_linux_amd64.zip dest=/usr/bin/ copy=no        
+
