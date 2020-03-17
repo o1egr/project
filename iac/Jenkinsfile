@@ -1,0 +1,33 @@
+ pipeline {
+ agent none
+ 
+ stages {
+ 
+ stage('GitHub') {
+     agent { label 'terraform' }
+ steps {
+     git branch: 'master',
+     credentialsId: 'github-ssh',
+     url: 'git@github.com:o1egr/project_iac.git' }
+ }
+ 
+ stage('Terraform init') {
+     agent { label 'terraform' }
+ steps {
+     sh 'terraform init' }
+ }
+
+ stage('Terraform plan') {
+     agent { label 'terraform' }
+ steps {
+     sh 'terraform plan -out myplan' }
+ }
+ 
+  stage('Terraform apply') {
+     agent { label 'terraform' }
+ steps {
+     sh 'terraform apply -input=false myplan' }
+ }
+  
+ }
+ }
